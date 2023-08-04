@@ -1,0 +1,52 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block content %}
+ <div class="row justify-content-center m-2">
+
+    {% if products %}
+            {% for product in products %}
+
+                <div class="col-md-4">
+                    <div class="card m-3 p-2" style="width: 18rem; height: 33rem; box-shadow: 4px 4px #c291fa; border-radius: 25px 15px;">
+                        <img src="{{ product.image.url }}" style="height: 300px; width: 200px;"  class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 style="font-size: 17px;" class="card-title mt-1">{{ product.name }}</h4>
+                            <hr>
+
+                            <h3 style="color: rgb(16, 52, 107)" class="card-subtitle mt-1">${{ product.price }}</h3>
+                        </div>
+                        <a  class="btn btn-outline-secondary add-btn" style="background-color: #5707b3;" href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+                        <a class="btn" style="border-color: #5707b3; color: #5707b3;" href="{% url 'detail' product.pk %}">View</a>
+
+<!--                        <span><a href="{% url 'detail' product.pk %}" style="background-color: #5707b3;" class="btn btn-primary m-1">Detail</a></span>-->
+<!--                        <span><a href="#" style="background-color: #5707b3;" class="btn btn-primary m-1">Add to Cart</a></span>-->
+
+                    </div>
+                </div>
+
+            {% endfor %}
+
+    {% else %}
+                 <p>No Products </p>
+    {% endif %}
+ </div>
+{% endblock %}
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Home Page</h1>-->
+<!--{% if user.is_authenticated %}-->
+<!--    Hello {{user.username}}-->
+<!--    <br>-->
+<!--    <a href="{% url 'logout' %}">LogOut</a>-->
+<!--{% else %}-->
+<!--    Please <a href="{% url 'login' %}">LogIn</a> or-->
+<!--    <a href="{% url 'signup' %}">SignUp</a>-->
+<!--{% endif %}-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,38 @@
+{% extends 'products/base.html' %}
+{% load static %}
+{% block content %}
+<div class="card mb-3" style="max-width: 1100px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ product.image.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text">{{ product.description }}</p>
+        <p class="card-text"><small class="text-body-secondary">${{ product.price }}</small></p>
+      </div>
+        {% if user.is_superuser %}
+       <div class="d-grid gap-2 col-6 mx-auto">
+          <a class="btn btn-primary" type="button" href="{% url 'update' product.pk %}">Edit</a>
+          <a class="btn btn-primary" type="button" href="{% url 'delete' product.pk %}">Delete</a>
+       </div>
+        {% endif %}
+    </div>
+  </div>
+</div>
+<!--<div class="row justify-content-center">-->
+<!--      <div class="col-md-8">-->
+<!--        <a href="{% url 'home' %}" class="btn btn-primary mt-2">Back</a>-->
+<!--          <div class="card m-5 p-2" style="width: 25rem;">-->
+<!--              <img src="{{ product.image.url }}" class="card-img-top" alt="...">-->
+<!--              <div class="card-body">-->
+<!--                  <h5 class="card-title m-1"><b>Name:</b> {{ product.name }}</h5>-->
+<!--                  <h4 class="card-subtitle m-1"><b>Price:</b> ${{ product.price }}</h4>-->
+<!--                  <hr>-->
+<!--                  <p style="font-size: 15px;" class="card-text mt-1">Description: {{ product.description }}</p>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--</div>-->
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<form method="post">
+        {% csrf_token %}
+            <p>Are you sure to delete</p>
+    <button type="submit">Yes</button>
+    <a href="{% url 'home'%}">Cancel</a>
+    </form>
+{% endblock %}
