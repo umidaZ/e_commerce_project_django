@@ -35,11 +35,14 @@
 			{% else %}
 	     		<a href="{% url 'login' %}" class="btn btn-light">LogIn</a>
 			{% endif %}
+        	{% if user.is_authenticated %}
 	     	<a href="{% url 'cart_detail' %}">
+				{% else %}
+				<a href="{% url 'login' %}">
+					{% endif %}
 	    		<img  id="cart-icon" src="{% static 'images/cart.png' %}">
 	    	</a>
 	    	<p id="cart-total">{{cart_total}}</p>
-
 	    </div>
 	  </div>
 	</nav>
