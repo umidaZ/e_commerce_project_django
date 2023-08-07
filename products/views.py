@@ -4,9 +4,6 @@ from django.views import generic
 from . models import Product, Cart
 # Create your views here.
 
-# def homePage(request):
-#     return render(request, 'products/home.html')
-
 
 class HomePage(generic.ListView):
     model = Product
@@ -20,29 +17,29 @@ class DetailedPage(generic.DetailView):
     context_object_name = 'product'
 
 
-class CartDetail(generic.ListView):
-    model = Cart
-    template_name = 'products/cart.html'
-    context_object_name = 'orders'
-    cart_total = Cart.get_cart_item()
-    context = {'cart_total': cart_total}
+def cartDetail(request):
+    cart_items = Cart.objects.filter(user=request.user)
+    total_price = sum(item.quantity * item.product.price for item in cart_items)
+    cart_total_items = sum([item.quantity for item in cart_items])
+
+    context = {
+        "cart_items": cart_items,
+        "total_price": total_price,
+        "cart_total_items": cart_total_items,
+    }
+    return render(request, "products/cart.html", context)
 
 
-
-
-def addToCart(request, pk):
-    product = Product.objects.get(id=pk)
+def addToCart(request,pk):
     try:
-        order = Cart.objects.get(product=product)
-        order.quantity += 1
-        order.save()
+        cart_item = Cart.objects.get(user=request.user, product_id=pk)
+        if cart_item:
+            cart_item.quantity += 1
+            cart_item.save()
     except:
-        order = Cart.objects.create(product=product)
-        order.save()
+        Cart.objects.create(user=request.user, product_id=pk)
 
-    if request.user.is_authenticated:
-        cart, created = Cart.objects.get_or_create(user=request.user, completed=False)
-    return redirect('home')
+    return redirect("home")
 
 
 class UpdateProduct(generic.edit.UpdateView):

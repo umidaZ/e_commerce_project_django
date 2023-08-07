@@ -16,25 +16,25 @@
 
   <div class="itemContainer">
 
-    {% for order in orders %}
+    {% for item in cart_items %}
     <div class="item">
       <div class="iteminfo">
         <div class="p_img">
-          <img src="{{order.product.image.url}}" alt="" />
+          <img src="{{item.product.image.url}}" alt="" />
         </div>
         <p>{{order.product.name}}</p>
       </div>
 
-      <div class="name"><p>{{order.quantity}}</p></div>
-      <div class="name"><p>${{order.product.price}}</p></div>
-      <div class="name"><p>${{order.get_total}}</p></div>
+      <div class="name"><p>{{item.quantity}}</p></div>
+      <div class="name"><p>${{item.product.price}}</p></div>
+      <div class="name"><p>${{item.get_total}}</p></div>
     </div>
 
     {% endfor %}
   </div>
 
   <div class="pay-section">
-    <h3>Grand-Total: ${{order.get_cart_total}}</h3>
+    <h3>Grand-Total: ${{total_price}}</h3>
     <button onclick = "makePayment()" >Pay</button>
   </div>
 </div>

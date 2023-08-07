@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -22,7 +22,8 @@ class Product(models.Model):
 
 
 class Cart(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cartitems')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
     def get_total(self):
@@ -34,17 +35,4 @@ class Cart(models.Model):
         return f'{self.product.name} :  {self.quantity}'
 
 
-    def get_cart_total(self):
-        total = 0
-        cart_items = Cart.objects.all()
-        for cart_item in cart_items:
-            total += cart_item.get_total()
-        return total
 
-    @classmethod
-    def get_cart_item(cls):
-        quantity = 0
-        cart_items = cls.objects.all()
-        for cart_item in cart_items:
-            quantity += cart_item.quantity
-        return quantity
